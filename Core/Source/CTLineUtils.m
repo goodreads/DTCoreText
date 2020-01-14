@@ -10,6 +10,10 @@
 
 BOOL areLinesEqual(CTLineRef line1, CTLineRef line2)
 {
+		if(line1 == nil || line2 == nil) {
+			return NO;
+		}
+
     CFArrayRef glyphRuns1 = CTLineGetGlyphRuns(line1);
     CFArrayRef glyphRuns2 = CTLineGetGlyphRuns(line2);
     CFIndex runCount1 = CFArrayGetCount(glyphRuns1), runCount2 = CFArrayGetCount(glyphRuns2);
@@ -69,6 +73,7 @@ BOOL areLinesEqual(CTLineRef line1, CTLineRef line2)
 
 CFIndex getTruncationIndex(CTLineRef line, CTLineRef trunc)
 {
+		if (line == nil || trunc == nil) return 0;
     CFIndex truncCount = CFArrayGetCount(CTLineGetGlyphRuns(trunc));
     
     CFArrayRef lineRuns = CTLineGetGlyphRuns(line);
