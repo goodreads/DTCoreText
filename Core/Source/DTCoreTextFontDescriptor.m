@@ -568,8 +568,9 @@ static BOOL _needsChineseFontCascadeFix = NO;
 	{
 		// we can create a font directly from the name
 		NSString *usedName = overrideName?overrideName:_fontName;
-		
-		matchingFont = CTFontCreateWithName((__bridge CFStringRef)usedName, _pointSize, NULL);
+
+		CTFontDescriptorRef ref = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)usedName, _pointSize);
+		matchingFont = CTFontCreateWithFontDescriptor(ref, _pointSize, NULL);
 	}
 	else
 	{

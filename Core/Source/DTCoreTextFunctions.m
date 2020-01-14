@@ -13,7 +13,7 @@
 #if TARGET_OS_IPHONE
 CTFontRef DTCTFontCreateWithUIFont(UIFont *font)
 {
-	return CTFontCreateWithName((__bridge CFStringRef)font.fontName, font.pointSize, NULL);
+	return CTFontCreateWithFontDescriptor((__bridge CTFontDescriptorRef)font.fontDescriptor, font.pointSize, NULL);
 }
 #endif
 

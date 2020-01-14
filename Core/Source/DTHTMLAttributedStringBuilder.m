@@ -565,7 +565,8 @@
 		if (face)
 		{
 			// create a temp font with this face
-			CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)face, pointSize, NULL);
+			CTFontDescriptorRef ref = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)face, pointSize);
+			CTFontRef font = CTFontCreateWithFontDescriptor(ref, pointSize, NULL);
 			
 			self->_currentTag.fontDescriptor = [DTCoreTextFontDescriptor fontDescriptorForCTFont:font];
 			

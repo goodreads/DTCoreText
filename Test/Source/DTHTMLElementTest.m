@@ -40,8 +40,8 @@
 	DTHTMLElement *element = [[DTHTMLElement alloc] init];
 	element.textScale = 1;
 	element.paragraphStyle = [DTCoreTextParagraphStyle defaultParagraphStyle];
-	CTFontRef font = CTFontCreateWithName(CFSTR("Helvetica"), 20, NULL);
-	element.fontDescriptor = [DTCoreTextFontDescriptor fontDescriptorForCTFont:font];
+	CTFontDescriptorRef ref = CTFontDescriptorCreateWithNameAndSize(CFSTR("Helvetica"), 20);
+	CTFontRef font = CTFontCreateWithFontDescriptor(ref, 20, NULL);
 	CFRelease(font);
 	
 	NSDictionary *styles = @{@"-webkit-margin-after" : @"1em",
@@ -65,8 +65,8 @@
 	DTHTMLElement *element = [[DTHTMLElement alloc] init];
 	element.textScale = 1;
 	element.paragraphStyle = [DTCoreTextParagraphStyle defaultParagraphStyle];
-	CTFontRef font = CTFontCreateWithName(CFSTR("Helvetica"), 20, NULL);
-	element.fontDescriptor = [DTCoreTextFontDescriptor fontDescriptorForCTFont:font];
+	CTFontDescriptorRef ref = CTFontDescriptorCreateWithNameAndSize(CFSTR("Helvetica"), 20);
+	CTFontRef font = CTFontCreateWithFontDescriptor(ref, 20, NULL);
 	CFRelease(font);
 	
 	DTObjectTextAttachment *object = [[DTObjectTextAttachment alloc] initWithElement:element options:nil];
