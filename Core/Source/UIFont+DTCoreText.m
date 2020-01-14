@@ -15,12 +15,14 @@
 	NSString *fontName = (__bridge_transfer NSString *)CTFontCopyName(ctFont, kCTFontPostScriptNameKey);
 
 	CGFloat fontSize = CTFontGetSize(ctFont);
-	UIFont *font = [UIFont fontWithName:fontName size:fontSize];
+	CTFontDescriptorRef ref = CTFontCopyFontDescriptor(ctFont);
+	UIFont *font = CFBridgingRelease(CTFontCreateWithFontDescriptor(ref, fontSize, nil));
 
 	// fix for missing HelveticaNeue-Italic font in iOS 7.0.x
 	if (!font && [fontName isEqualToString:@"HelveticaNeue-Italic"])
 	{
-		font = [UIFont fontWithName:@"HelveticaNeue-LightItalic" size:fontSize];
+		CTFontDescriptorRef ref = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)@"HelveticaNeue-LightItalic", fontSize);
+		font = CFBridgingRelease(CTFontCreateWithFontDescriptor(ref, fontSize, NULL));
 	}
 
 	return font;
