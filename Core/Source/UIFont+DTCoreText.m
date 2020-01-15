@@ -21,8 +21,11 @@
 	// fix for missing HelveticaNeue-Italic font in iOS 7.0.x
 	if (!font && [fontName isEqualToString:@"HelveticaNeue-Italic"])
 	{
-		CTFontDescriptorRef ref = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)@"HelveticaNeue-LightItalic", fontSize);
-		font = CFBridgingRelease(CTFontCreateWithFontDescriptor(ref, fontSize, NULL));
+		NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+    [attributes setObject:@"HelveticaNeue-LightItalic" forKey:(id)kCTFontFamilyNameAttribute];
+    [attributes setObject:[NSNumber numberWithFloat:fontSize] forKey:(id)kCTFontSizeAttribute];
+    CTFontDescriptorRef fontDesc = CTFontDescriptorCreateWithAttributes((CFDictionaryRef)attributes);
+		font = CFBridgingRelease(CTFontCreateWithFontDescriptor(fontDesc, fontSize, NULL));
 	}
 
 	return font;

@@ -565,9 +565,12 @@
 		if (face)
 		{
 			// create a temp font with this face
-			CTFontDescriptorRef ref = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)face, pointSize);
-			CTFontRef font = CTFontCreateWithFontDescriptor(ref, pointSize, NULL);
-			
+			NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+			[attributes setObject:face forKey:(id)kCTFontFamilyNameAttribute];
+			[attributes setObject:[NSNumber numberWithFloat:pointSize] forKey:(id)kCTFontSizeAttribute];
+			CTFontDescriptorRef fontDesc = CTFontDescriptorCreateWithAttributes((CFDictionaryRef)attributes);
+			CTFontRef font = CTFontCreateWithFontDescriptor(fontDesc, pointSize, NULL);
+
 			self->_currentTag.fontDescriptor = [DTCoreTextFontDescriptor fontDescriptorForCTFont:font];
 			
 			CFRelease(font);

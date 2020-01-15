@@ -436,8 +436,11 @@ static BOOL _needsChineseFontCascadeFix = NO;
 	
 	if (!self.boldTrait && _needsChineseFontCascadeFix)
 	{
-		CTFontDescriptorRef desc = CTFontDescriptorCreateWithNameAndSize(CFSTR("STHeitiSC-Light"), self.pointSize);
-		
+		NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+		[attributes setObject:@"STHeitiSC-Light" forKey:(id)kCTFontFamilyNameAttribute];
+		[attributes setObject:[NSNumber numberWithFloat:self.pointSize] forKey:(id)kCTFontSizeAttribute];
+		CTFontDescriptorRef desc = CTFontDescriptorCreateWithAttributes((CFDictionaryRef)attributes);
+
 		[tmpDict setObject:[NSArray arrayWithObject:(__bridge_transfer id) desc] forKey:(id)kCTFontCascadeListAttribute];
 	}
 	
@@ -569,8 +572,11 @@ static BOOL _needsChineseFontCascadeFix = NO;
 		// we can create a font directly from the name
 		NSString *usedName = overrideName?overrideName:_fontName;
 
-		CTFontDescriptorRef ref = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)usedName, _pointSize);
-		matchingFont = CTFontCreateWithFontDescriptor(ref, _pointSize, NULL);
+		NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+    [attributes setObject:usedName forKey:(id)kCTFontFamilyNameAttribute];
+    [attributes setObject:[NSNumber numberWithFloat:_pointSize] forKey:(id)kCTFontSizeAttribute];
+    CTFontDescriptorRef fontDesc = CTFontDescriptorCreateWithAttributes((CFDictionaryRef)attributes);
+    matchingFont = CTFontCreateWithFontDescriptor(fontDesc, _pointSize, NULL);
 	}
 	else
 	{
